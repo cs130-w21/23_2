@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= csrf_meta_tags %>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+    
+      <body style="background-color:#FFFAFA">
+        <% unless (controller_name=="sessions" && action_name=='new') || (controller_name=="registrations" && action_name=='new') || (controller_name=="passwords" && action_name=='new') %>
+        
+          <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class='container'>
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                
+                
+               
+            
+                <%= link_to root_path, class: "navbar-brand" do %>
+                    pangaea
+                <% end %>
+              </div>
+            <div class="collapse navbar-collapse" id="main-nav-collapse">
+              <div class="nav navbar-nav navbar-right">
+                <% if user_signed_in? %>
+                  <li><%= link_to "Log Out", destroy_user_session_path, method: :delete%></li>
+                <% else %>
+                  <li><%= link_to "Log In", new_user_session_path, class: "linkfocus"%></li>
+                  <li><%= link_to "Sign Up", new_user_registration_path, class: "linkfocus"%></li>
+                <% end %>
+              </div>
+              <ul class="nav navbar-nav navbar-right">
+                
+                <% if user_signed_in? %>
+                  <% if current_user.profile %>
+                    <li><%= form_for current_user.profile, url: user_profile_path(current_user.id) do |f| %>
+                    <p>
+                    <%= f.text_field :search, autocomplete: "off", placeholder: "Try \"Tennis\"", class: 'searchbar' %>
+ 
+                    <button type="submit"><i class="fa fa-search"></i>
+                    <% end %></li>
+                    
+                  
+                    <li><%= link_to user_path(:uid => current_user.uid, :id => current_user.id), class: "navbar-brand" do %>
+                      <i class="fas fa-user"></i>
+                    <% end %></li>
+                    
+                    <% else %>
+                    <li><%= link_to "Create Profile", new_user_profile_path(user_id: current_user.id, user_uid: current_user.uid)%></li>
+                  <% end %>
+                <% end %>
+              </ul>
+              
+            </div><!-- /.navbar-collapse -->
+          </div>
+        
+      </nav>
+      <% end %>
+      <div class="container">
+      
+      <%= yield %>
+      </div>
+    </body>
+  
+</html>

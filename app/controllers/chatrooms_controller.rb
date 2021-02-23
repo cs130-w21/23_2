@@ -14,7 +14,16 @@ class ChatroomsController < ApplicationController
  
   def show
     
+    @user = User.find(current_user.id)
+    if current_user.profile
+      current_user.profile.update_attribute(:search, '')
+    end
+    @chatroom = Chatroom.find(params[:id])
     
+    @chatroom_user = @chatroom.chatroom_users.where(user_id: current_user.id).first
+    if @chatroom_user
+      @chatroom_user.update_attribute(:read, true)
+    end
   end
   
   def update
@@ -25,9 +34,6 @@ class ChatroomsController < ApplicationController
     end
   end
 
-  def show
-  
-  end 
   # GET /chatrooms/new
   def new
     @user = User.find(current_user.id)

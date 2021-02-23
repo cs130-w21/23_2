@@ -1,9 +1,11 @@
 class ChatroomUsersController < ApplicationController
 
-
 	def create
 		@chatroom = Chatroom.find(params[:chatroom_id])
-		@chatroom_user = @chatroom.chatroom_users.where(user_id: current_user.id).first_or_create
+		@request = Request.find(params[:request_id])
+		@chatroom_user = @chatroom.chatroom_users.where(user_id: @request.user_id).first_or_create
+		
+		@chatroom.requests.where(user_id: @request.user_id).destroy_all
 		redirect_to chatrooms_path(:id => current_user.id)
 	end 
 	
@@ -26,9 +28,4 @@ class ChatroomUsersController < ApplicationController
 		redirect_to chatrooms_path(:id => current_user.id)
 	end
 	
-
-	
-
-
-
 end

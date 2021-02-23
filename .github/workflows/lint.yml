@@ -34,7 +34,7 @@ jobs:
       - name: Create Config
         run: |
           mkdir -p ${{ github.workspace }}/.github/actions/config
-          echo "versions:\n  - rubocop: "0.81.0" > ${{ github.workspace }}/.github/actions/config/rubocop.yml
+          echo 'versions:\n  - rubocop: "0.81.0"' > ${{ github.workspace }}/.github/actions/config/rubocop.yml
           
       - name: RuboCop Linter
         uses: andrewmcodes/rubocop-linter-action@v3.3.0

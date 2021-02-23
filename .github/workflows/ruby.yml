@@ -32,10 +32,10 @@ jobs:
       uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
       with:
         ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+        bundler-cache: false # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
       run: |
-        sudo yum isttall postgresql-devel
+        sudo yum install postgresql-devel
         bundle exec rake
         bundle install
         rails db:drop

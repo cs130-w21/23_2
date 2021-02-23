@@ -6,6 +6,20 @@ on: push
 jobs:
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
+  evaluate-environment:
+    name: Print Environment
+    runs-on: [self-hosted, humio, special]
+    steps:
+      - name: Print github workspace
+        run: |
+          echo "GITHUB_WORKSPACE = $GITHUB_WORKSPACE"
+          echo "github.workspace = ${{ github.workspace }}"
+          echo "pr.ref = ${{github.event.pull_request.head.ref}}"
+          echo "github.ref = ${{ github.ref }}"
+          echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+
   linter:
     # Name the Job
     name: Lint code base

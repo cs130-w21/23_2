@@ -8,7 +8,7 @@ jobs:
   # when a job name is not provided
   evaluate-environment:
     name: Print Environment
-    runs-on: [self-hosted, humio, special]
+    runs-on: ubuntu-latest
     steps:
       - name: Print github workspace
         run: |

@@ -7,8 +7,10 @@ gem 'puma', '3.4.0'
 gem 'sass-rails', '5.0.6'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '3.0.0'
+gem 'font-awesome-sass', '4.6.2'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '4.2.1'
+gem 'bootstrap-sass', '3.3.7'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 # Use jquery as the JavaScript library
@@ -17,15 +19,16 @@ gem 'jquery-rails', '4.1.1'
 gem 'turbolinks', '5.0.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '2.5.0'
+gem 'devise', '4.2.0'
+gem "select2-rails"
+gem 'paperclip', '4.3.6'
+gem 'sunspot_rails'
+gem 'progress_bar', '1.3.1'
+gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development. Not for use in production.
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '3.1.7'
-gem 'devise', '4.2.0'
-gem "select2-rails"
-gem 'bootstrap-sass', '3.3.7'
-gem 'font-awesome-sass', '4.6.2'
-gem 'paperclip', '4.3.6'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 group :development, :test do
@@ -49,6 +52,3 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 ruby '2.3.0'
-
-gem 'sunspot_rails'
-gem 'sunspot_solr'

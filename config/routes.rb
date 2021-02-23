@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resource :profile
     
   end
-    
+  
   resources :chatrooms do
     resource :requests
     resource :chatroom_users
@@ -24,6 +24,4 @@ Rails.application.routes.draw do
   end
 
   get '/search' => 'pages#search', :as => 'search_page'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
-

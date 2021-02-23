@@ -7,10 +7,6 @@ class UsersController < ApplicationController
     end
     
     @user = User.find( params[:id] )
-    if !@user
-      redirect_to root_path
-    end
-  
-    
+
   end
 end

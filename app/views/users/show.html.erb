@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <header>
@@ -10,13 +11,9 @@
 				<div class="profile-user-name"><%= @user.profile.last_name %></div>
 				<% if current_user==@user %>
 				<button class="profile-edit-btn">
-					
 						<%= link_to "Edit Profile", edit_user_profile_path(@user), class: "buttonprofile"%>
-					
 				</button>
 				<%end%>
-			
-			
 		</div>
 		
 		</div>

@@ -3,23 +3,15 @@ class ChatroomUsersController < ApplicationController
 
 	def create
 		@chatroom = Chatroom.find(params[:chatroom_id])
-		@request = Request.find(params[:request_id])
-		@chatroom_user = @chatroom.chatroom_users.where(user_id: @request.user_id).first_or_create
-		
-		@chatroom.requests.where(user_id: @request.user_id).destroy_all
-		redirect_to chatrooms_path(:uid => current_user.uid, :id => current_user.id)
+		@chatroom_user = @chatroom.chatroom_users.where(user_id: current_user.id).first_or_create
+		redirect_to chatrooms_path(:id => current_user.id)
 	end 
-	
-
 	
 	def show
 		@chatroom = Chatroom.find(params[:chatroom_id])
 		@chatroom_user = @chatroom.chatroom_users.where(user_id: current_user.id).first_or_create
 		@chatroom_user.update_attribute(:admin, true)
-	
 		redirect_to @chatroom
-		
-		
 	end 
 	
 	def destroy
@@ -31,7 +23,7 @@ class ChatroomUsersController < ApplicationController
 				x.update_attribute(:admin, true)
 			end
 		end
-		redirect_to chatrooms_path(:uid => current_user.uid, :id => current_user.id)
+		redirect_to chatrooms_path(:id => current_user.id)
 	end
 	
 

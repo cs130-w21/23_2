@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   resources :chatrooms do
     resource :requests
     resource :chatroom_users
-    resources :messages
   end
 
   get '/search' => 'pages#search', :as => 'search_page'

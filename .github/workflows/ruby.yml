@@ -35,7 +35,6 @@ jobs:
         bundler-cache: false # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
       run: |
-        sudo yum install postgresql-devel
         bundle exec rake
         bundle install
         rails db:drop

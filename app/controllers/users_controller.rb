@@ -6,7 +6,7 @@ class UsersController < ApplicationController
       current_user.profile.update_attribute(:search, '')
     end
     
-    @user = User.find_by_uid( params[:uid] )
+    @user = User.find( params[:id] )
     if !@user
       redirect_to root_path
     end

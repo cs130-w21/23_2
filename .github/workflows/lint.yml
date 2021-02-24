@@ -38,7 +38,7 @@ jobs:
           
       - name: RuboCop
         run: |
-          sudo gem install rubocop
+          sudo gem install rubocop -v 0.81.0
           rubocop
 #      - name: RuboCop Linter
 #        uses: andrewmcodes/rubocop-linter-action@v3.3.0

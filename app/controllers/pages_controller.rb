@@ -1,24 +1,17 @@
+# frozen_string_literal: true
+
 class PagesController < ApplicationController
-    def home
-        @user = User.find(current_user.id)
-        if current_user.profile
-            
-           
-            @chatrooms = Chatroom.all
-            @results = []
-            @chatrooms.each do |x|
-                
-                @results.push(x)
+  def home
+    @user = User.find(current_user.id)
+    if current_user.profile
 
-            end
-            @unread = 0
-            @requests = 0
-        end
-        
-        
+      @chatrooms = Chatroom.all
+      @results = []
+      @chatrooms.each do |x|
+        @results.push(x)
+      end
+      @unread = 0
+      @requests = 0
     end
-    
-    
-    
-
+  end
 end

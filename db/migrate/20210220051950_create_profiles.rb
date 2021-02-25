@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateProfiles < ActiveRecord::Migration[5.0]
   def change
     create_table :profiles do |t|
@@ -9,11 +11,11 @@ class CreateProfiles < ActiveRecord::Migration[5.0]
       t.string :gender
       t.string :city
       t.string :collegeemail
-      t.string :genderpreference, :default => 'Does Not Matter'
-      t.integer :minimumage, :default => 13
-      t.integer :maximumage, :default => 100
-      t.string :collegepreference, :default => 'Does Not Matter'
-      t.string :search, :default => ''
+      t.string :genderpreference, default: 'Does Not Matter'
+      t.integer :minimumage, default: 13
+      t.integer :maximumage, default: 100
+      t.string :collegepreference, default: 'Does Not Matter'
+      t.string :search, default: ''
       t.timestamps
     end
   end

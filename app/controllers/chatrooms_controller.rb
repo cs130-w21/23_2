@@ -9,7 +9,6 @@ class ChatroomsController < ApplicationController
     @chatrooms = Chatroom.all
   end
 
-
   # GET /chatrooms/1
   # GET /chatrooms/1.json
 

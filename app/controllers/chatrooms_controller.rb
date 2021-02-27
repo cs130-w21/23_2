@@ -9,6 +9,7 @@ class ChatroomsController < ApplicationController
     @chatrooms = Chatroom.all
   end
 
+
   # GET /chatrooms/1
   # GET /chatrooms/1.json
 
@@ -19,6 +20,7 @@ class ChatroomsController < ApplicationController
 
     @chatroom_user = @chatroom.chatroom_users.where(user_id: current_user.id).first
     @chatroom_user&.update_attribute(:read, true)
+    @messages = @chatroom.messages.order(created_at: :desc).reverse
   end
 
   def update

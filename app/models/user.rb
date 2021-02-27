@@ -9,5 +9,6 @@ class User < ApplicationRecord
   has_one :profile
   has_many :chatroom_users
   has_many :chatrooms, through: :chatroom_users
+  has_many :messages
   has_many :requests
 end

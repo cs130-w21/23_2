@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+# This class adds users to the database.
+
 class DeviseCreateUsers < ActiveRecord::Migration[5.0]
+  # Add a user to the database with the specified email and password.
   def change
     create_table :users do |t|
       ## Database authenticatable

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+# This class creates messages.
+
 class MessagesController < ApplicationController
+  # Create a message with the given parameters and post it to the current chatroom.
   def create
     @chatroom = Chatroom.find(params[:chatroom_id])
     message = @chatroom.messages.new(message_params)
@@ -9,7 +12,7 @@ class MessagesController < ApplicationController
     @chatroom.chatroom_users.each do |x|
       x.update_attribute(:read, false) if x.user_id != current_user.id
     end
-    redirect_to @chatroom
+    redirect_to @chatrooms
   end
 
   private

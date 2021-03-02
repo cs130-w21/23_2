@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+# This class adds user profiles to the database.
+
 class CreateProfiles < ActiveRecord::Migration[5.0]
+  # Add a new profile in the database with the specified avatar, ID, name, age, gender, city, college email, and gender.
   def change
     create_table :profiles do |t|
       t.attachment :avatar

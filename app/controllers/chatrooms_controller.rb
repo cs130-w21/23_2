@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
+# This class creates, displays, and finds chatrooms.
+
 class ChatroomsController < ApplicationController
-  # GET /chatrooms
-  # GET /chatrooms.json
+  # Finds all chatrooms where the current user is a member.
   def index
     @user = User.find(current_user.id)
     current_user.profile&.update_attribute(:search, '')
     @chatrooms = Chatroom.all
   end
 
-  # GET /chatrooms/1
-  # GET /chatrooms/1.json
-
+  # Finds and displays the chatroom with the given parameters, along with its messages.
   def show
     @user = User.find(current_user.id)
     current_user.profile&.update_attribute(:search, '')
@@ -22,6 +21,7 @@ class ChatroomsController < ApplicationController
     @messages = @chatroom.messages.order(created_at: :desc).reverse
   end
 
+  # Updates the chatroom with the given parameters and redirects to the chatroom if successful.
   def update
     @user = User.find(current_user.id)
     @chatroom = Chatroom.find(params[:chatroom_id])
@@ -30,18 +30,17 @@ class ChatroomsController < ApplicationController
     end
   end
 
-  # GET /chatrooms/new
+  # Creates a new chatroom.
   def new
     @user = User.find(current_user.id)
     current_user.profile&.update_attribute(:search, '')
     @chatroom = Chatroom.new
   end
 
-  # GET /chatrooms/1/edit
+  # Edits a chatroom. Not currently implemented or used.
   def edit; end
 
-  # POST /chatrooms
-  # POST /chatrooms.json
+  # Creates a new chatroom and redirects to it if successfully saved.
   def create
     @user = User.find(current_user.id)
     @chatroom = Chatroom.new(chatroom_params)

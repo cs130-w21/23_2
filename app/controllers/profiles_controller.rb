@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
+# This class creates and modifies user profiles.
+
 class ProfilesController < ApplicationController
+  # Generates a new profile.
   def new
     @profile = Profile.new
   end
 
+  # Creates a user profile with the given parameters. If successful, redirects to their profile page.
   def create
     # Ensure that we have the user who is filling out form
     @user = User.find(params[:user_id])
@@ -18,11 +22,13 @@ class ProfilesController < ApplicationController
     end
   end
 
+  # Finds the user with the current ID.
   def edit
     @user = User.find(current_user.id)
     @profile = @user.profile
   end
 
+  # Updates the attributes of the selected profile with the given parameters. If successful, redirects to their profile page.
   def update
     @user = User.find(current_user.id)
     @profile = @user.profile

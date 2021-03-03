@@ -25,10 +25,7 @@ gem 'jbuilder', '2.5.0'
 gem 'paperclip', '4.3.6'
 gem 'progress_bar', '1.3.1'
 gem 'select2-rails'
-gem 'sunspot_rails'
-gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development. Not for use in production.
-gem 'elasticsearch', '6.3.0'
-gem 'chewy', '5.0.0'
+
 gem 'swot', '1.0'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '3.0'

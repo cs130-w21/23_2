@@ -28,4 +28,7 @@ jobs:
       run: |
         echo | ls
         echo | pwd
+        cd app
+        echo | ls
+        echo | pwd
         

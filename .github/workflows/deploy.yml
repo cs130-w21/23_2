@@ -26,7 +26,8 @@ jobs:
     
     - name: Build Project
       run: |
-        cd app
+        pwd
+        ls
         sudo apt-get install postgresql
         bundle exec rake
         bundle install

@@ -12,7 +12,7 @@ class PagesController < ApplicationController
       @results = []
       @chatrooms.each do |x|
 
-        if !(current_user.profile.search.blank?) && !(x.title.downcase.include? current_user.profile.search.downcase)
+        if !(current_user.profile.search.blank?) && !((x.title.downcase.include? current_user.profile.search.downcase)||(x.details.downcase.include? current_user.profile.search.downcase))
           next
         end
         if x.chatroom_users.count==0

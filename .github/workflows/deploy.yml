@@ -28,7 +28,7 @@ jobs:
         
     - name: Build Project
       run: |
-        gem install bundler -v 2.0.1
+        gem install bundler -v 1.15.2
         bundle update -bundler
         bundle install
         sudo apt-get install postgresql

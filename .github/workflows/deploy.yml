@@ -30,7 +30,7 @@ jobs:
       run: |
         gem update --system 3.0.9
         gem install bundler -v '2.2.12'
-        gem install puma -v '3.4.0' --source 'https://rubygems.org/'
+        gem install puma:4.3.5 -- --with-cflags="-Wno-error=implicit-function-declaration"
         bundle install
         sudo apt-get install postgresql
         rails db:drop

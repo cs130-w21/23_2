@@ -26,8 +26,8 @@ jobs:
     
     - name: Build Project
       run: |
+        sudo bundle install
         sudo apt-get install postgresql
-        bundle install
         rails db:drop
         rails db:create
         rails db:migrate

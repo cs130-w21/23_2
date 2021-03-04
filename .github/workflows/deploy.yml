@@ -23,15 +23,14 @@ jobs:
       with:
         ruby-version: 2.3.0
 
-    
     - name: Checkout code
       uses: actions/checkout@v2
         
     - name: Build Project
       run: |
-        echo | ls
-        echo | pwd
-        cd app
-        echo | ls
-        echo | pwd
-        
+        bundle install
+        sudo apt-get install postgresql
+        rails db:drop
+        rails db:create
+        rails db:migrate
+        rails server

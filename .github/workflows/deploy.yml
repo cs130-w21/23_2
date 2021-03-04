@@ -27,9 +27,4 @@ jobs:
     - name: Build Project
       run: |
         echo | find . -name Gemfile
-        bundle install
-        sudo apt-get install postgresql
-        rails db:drop
-        rails db:create
-        rails db:migrate
-        rails server
+        

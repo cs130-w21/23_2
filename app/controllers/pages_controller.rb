@@ -7,10 +7,12 @@ class PagesController < ApplicationController
   def home
     @user = User.find(current_user.id)
     if current_user.profile
-
-      @chatrooms = Chatroom.all
+      @search = Chatroom.all
       @results = []
-      @chatrooms.each do |x|
+      @search.each do |x|
+        if (!current_user.profile.search.blank?) && x.title!=current_user.profile.search
+          next
+        end
         if x.chatroom_users.count==0
           next
         end

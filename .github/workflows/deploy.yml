@@ -1,0 +1,35 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CD
+
+# Controls when the action will run. 
+on:
+  push:
+    branches:
+      master
+  pull_request:
+    branches:
+      master
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1.66.0
+      with:
+        ruby-version: 2.3.0
+
+    
+    - name: Build Project
+      run: |
+        sudo yum isttall postgresql-devel
+        bundle exec rake
+        bundle install
+        rails db:drop
+        rails db:create
+        rails db:migrate
+        rails server

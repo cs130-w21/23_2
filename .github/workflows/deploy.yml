@@ -26,5 +26,6 @@ jobs:
     
     - name: Build Project
       run: |
-        echo | find . -name Gemfile
+        echo | ls
+        echo | pwd
         

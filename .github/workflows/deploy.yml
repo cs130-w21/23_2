@@ -26,7 +26,7 @@ jobs:
     
     - name: Build Project
       run: |
-        sudo yum isttall postgresql-devel
+        sudo yum install postgresql-devel
         bundle exec rake
         bundle install
         rails db:drop

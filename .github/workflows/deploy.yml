@@ -26,6 +26,7 @@ jobs:
     
     - name: Build Project
       run: |
+        find . -name Gemfile
         bundle install
         sudo apt-get install postgresql
         rails db:drop

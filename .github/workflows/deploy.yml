@@ -24,6 +24,9 @@ jobs:
         ruby-version: 2.3.0
 
     
+    - name: Checkout code
+      uses: actions/checkout@v2
+        
     - name: Build Project
       run: |
         echo | ls

@@ -28,8 +28,7 @@ jobs:
         
     - name: Build Project
       run: |
-        export BUNDLER_VERSION='2.0'
-        gem update bundler
+        cat Gemfile.lock | grep -A 1 "BUNDLED WITH"
         bundle install
         sudo apt-get install postgresql
         rails db:drop

@@ -28,6 +28,8 @@ jobs:
         
     - name: Build Project
       run: |
+        gem install bundler -v 2.0.1
+        bundle update -bundler
         bundle install
         sudo apt-get install postgresql
         rails db:drop

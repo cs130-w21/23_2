@@ -92,3 +92,57 @@ A repository can also be setup to build continuously whenever a commit is pushed
 The CI script will also be run when a new pull request is created or when more commits are pushed to its linked `issue` branch. Such build assures peer reviewers that the new commits when accepted will not break the build. In fact, a successful CI build can be a prerequisute for peer reviewers to look at the changes.
 
 When a tag is pushed to the `master` branch, the CI script will additionally deliver and/or deploy the built artifact(s). The script can also be configured to create a Github release based on the tag.
+
+### Automated Build/Test/Deployment Process
+Our project uses 2 Github Actions to ensure code quality.<br>
+The Linter workflow is in charge of linting our code, helping us avoid errors and code that looks like errors. This workflow is triggered whenever our master branch is updated.<br>
+The CD workflow is in charge of checking that our code is buildable and runnable on the latest version of ubuntu. It does a quick build and runs the application for a few seconds to check that everything is runnable. It is triggered whenever our master branch is updated, or if we create a pull request to merge with the master branch.
+
+### Build and Deploy Instructions
+To build and deploy the application, you will need an Amazon AWS account.
+Sign in to your Amazon AWS account and navigate to the Cloud9 service. Under *Your environments*, select *Create environment* and fill in your environment name and description. Select *Next step* and choose the following options:<br>
+&nbsp;&nbsp;    Environment type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        Create a new EC2 istance for environment (direct access)<br>
+&nbsp;&nbsp;    Instance type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        t2.micro (1 GiB RAM + 1 vCPU)<br>
+&nbsp;&nbsp;    Platform<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        Amazon Linux 2 (recommended)<br>
+&nbsp;&nbsp;    Cost-saving setting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        After 30 minutes (default)<br><br>
+Select *Next step* and then *Create environment*.<br>
+
+After the environment has been created, you should be in an online IDE, with a terminal near the bottom of the page. In the bash terminal, type `git clone https://github.com/cs130-w21/23_2.git` to pull our project's repo.<br>
+After cloning the repository, we need to install several packages and create the database. In terminal type
+```
+rvm install "ruby-2.3.0"
+gem update --system 3.0.9
+gem install bundler -v "2.2.12"
+
+cd 23_2
+sudo yum install -y openssl-devel
+sudo yum install postgresql-devel
+bundle config build.puma --with-cflags="-Wno-error=implicit-function-declaration"
+sudo yum install libpq-dev
+bundle install
+
+rails db:drop
+rails db:create
+rails db:migrate
+rails server
+```
+
+Make sure to agree to all the installation confirmation questions (type y then enter).<br>
+Because git does not allow the addition of an empty folder, but our application requires one, use the file explorer on the left of the page to navigate to /23_2/app/assets/javascripts and manually create a folder called channels there.<br>
+Now we can run the application by typing `rails server`. Click on *Preview* on the top center of the page and select *Preview Running Application*. If you get a red page stating "require_tree argument must be a directory", use the file explorer on the left of the page to navigate to /23_2/app/assets/javascripts and create a folder called channels. Otherwise, pop the application in a new window using the expand screen icon in the tab that opened up when you previewed the application. You should see a sign up screen.<br>
+
+
+If we ever update our project, to update your version of the application, you will have to fetch any changes on github and recreate the database before spinning up the server.
+```
+git checkout master
+git fetch
+git pull
+rails db:drop
+rails db:create
+rails db:migrate
+rails server
+```

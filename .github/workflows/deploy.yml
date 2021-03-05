@@ -30,7 +30,7 @@ jobs:
       run: |
         gem update --system 3.0.9
         gem install bundler -v '2.2.12'
-        apt-get install libssl1.0-dev
+        sudo apt-get install libssl1.0-dev
         bundle config build.puma --with-cflags="-Wno-error=implicit-function-declaration"
         bundle install
         sudo apt-get install postgresql

@@ -38,3 +38,4 @@ jobs:
         rails db:create
         rails db:migrate
         timeout 30s rails server
+        if [ $? -ne 124 ]; then     exit 1; fi

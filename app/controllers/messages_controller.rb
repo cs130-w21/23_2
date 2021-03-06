@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
     @chatroom.chatroom_users.each do |x|
       x.update_attribute(:read, false) if x.user_id != current_user.id
     end
-    redirect_to @chatrooms
+    redirect_to @chatroom
   end
 
   private

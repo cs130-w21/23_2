@@ -11,102 +11,73 @@ class PagesController < ApplicationController
 
       @results = []
       @chatrooms.each do |x|
+        if !current_user.profile.search.blank? && !((x.title.downcase.include? current_user.profile.search.downcase) || (x.details.downcase.include? current_user.profile.search.downcase))
+          next
+        end
+        next if x.chatroom_users.count == 0
 
-        if !(current_user.profile.search.blank?) && !((x.title.downcase.include? current_user.profile.search.downcase)||(x.details.downcase.include? current_user.profile.search.downcase))
-          next
-        end
-        if x.chatroom_users.count==0
-          next
-        end
         @member = x.chatroom_users.where(admin: true).first
         @adminuser = User.find(@member.user_id)
-        if x.city != current_user.profile.city
-          next
-        end
-        if x.minimumage > current_user.profile.age || x.maximumage < current_user.profile.age
-          next
-        end
+        next if x.city != current_user.profile.city
+        next if x.minimumage > current_user.profile.age || x.maximumage < current_user.profile.age
+
         if current_user.profile.minimumage > x.minimumage || current_user.profile.maximumage < x.maximumage
           max = 0
-          min =100 
+          min = 100
           x.chatroom_users.each do |y|
             @temporary = User.find(y.user_id)
-            if @temporary.profile.age < min
-              min = @temporary.profile.age
-            end
-            if @temporary.profile.age > max
-              max = @temporary.profile.age
-            end
+            min = @temporary.profile.age if @temporary.profile.age < min
+            max = @temporary.profile.age if @temporary.profile.age > max
           end
-          if current_user.profile.minimumage > min || current_user.profile.maximumage < max
-            next
-          end
+          next if current_user.profile.minimumage > min || current_user.profile.maximumage < max
         end
-        if ((x.gender == 'Only Male' && current_user.profile.gender != 'Male')||(x.gender == 'Only Female' && current_user.profile.gender != 'Female'))
-          next
-        end
-        if current_user.profile.genderpreference == 'Only Male' 
+        next if (x.gender == 'Only Male' && current_user.profile.gender != 'Male') || (x.gender == 'Only Female' && current_user.profile.gender != 'Female')
+
+        if current_user.profile.genderpreference == 'Only Male'
           result = false
           x.chatroom_users.each do |y|
             @temporary = User.find(y.user_id)
-            if @temporary.profile.gender!='Male'
+            if @temporary.profile.gender != 'Male'
               result = true
               break
             end
           end
-          if result == true
-            next
-          end
+          next if result == true
         end
-        if  current_user.profile.genderpreference == 'Only Female' 
+        if current_user.profile.genderpreference == 'Only Female'
           result = false
           x.chatroom_users.each do |y|
             @temporary = User.find(y.user_id)
-            if @temporary.profile.gender!='Female'
-              result = true
-            end
+            result = true if @temporary.profile.gender != 'Female'
           end
-          if result == true
-            next
-          end
+          next if result == true
         end
         if current_user.profile.genderpreference == 'Must Include Male'
           male = 0
           x.chatroom_users.each do |y|
-              @temporary = User.find(y.user_id)
-              if @temporary.profile.gender=='Male'
-                  male = male+1
-              end
+            @temporary = User.find(y.user_id)
+            male += 1 if @temporary.profile.gender == 'Male'
           end
-          if male == 0 
-              
-              next
-          end
+          next if male == 0
         end
         if current_user.profile.genderpreference == 'Must Include Female'
           female = 0
           x.chatroom_users.each do |y|
             @temporary = User.find(y.user_id)
-            if @temporary.profile.gender=='Female'
-              female = female+1
-            end
+            female += 1 if @temporary.profile.gender == 'Female'
           end
-          if female == 0 
-            next
-          end
+          next if female == 0
         end
         if current_user.profile.collegepreference == 'Only Students At My College'
           result = false
           x.chatroom_users.each do |y|
             @temporary = User.find(y.user_id)
-            if Swot::school_name(@temporary.profile.collegeemail)!=Swot::school_name(current_user.profile.collegeemail)
+            if Swot.school_name(@temporary.profile.collegeemail) != Swot.school_name(current_user.profile.collegeemail)
               result = true
               break
             end
           end
-          if result == true
-            next
-          end
+          next if result == true
         end
         if current_user.profile.collegepreference == 'Only College Students'
           result = false
@@ -117,51 +88,36 @@ class PagesController < ApplicationController
               break
             end
           end
-          if result == true
-            next
-          end
+          next if result == true
         end
         if current_user.profile.collegepreference == 'Must Include Students At My College'
           mycollege = 0
           x.chatroom_users.each do |y|
             @temporary = User.find(y.user_id)
-            if Swot::school_name(@temporary.profile.collegeemail)==Swot::school_name(current_user.profile.collegeemail)
-              mycollege = mycollege+1
-            end
+            mycollege += 1 if Swot.school_name(@temporary.profile.collegeemail) == Swot.school_name(current_user.profile.collegeemail)
           end
-          if mycollege == 0
-            next
-          end
+          next if mycollege == 0
         end
         if current_user.profile.collegepreference == 'Must Include College Students'
           number = 0
           x.chatroom_users.each do |y|
             @temporary = User.find(y.user_id)
-            if !@temporary.profile.collegeemail.blank?
-              number=number+1
-            end
+            number += 1 unless @temporary.profile.collegeemail.blank?
           end
-          if number == 0 
-            next
-          end
+          next if number == 0
         end
-        if (x.collegestudent == 'Only Students At My College' && Swot::school_name(current_user.profile.collegeemail) != Swot::school_name(@adminuser.profile.collegeemail))
-          next
-        end
-        if (x.collegestudent == 'Only College Students' && current_user.collegeemail.blank?)
-          next
-        end
-        if x.visible == false
-          next
-        end
-      @results.push(x)
+        next if x.collegestudent == 'Only Students At My College' && Swot.school_name(current_user.profile.collegeemail) != Swot.school_name(@adminuser.profile.collegeemail)
+        next if x.collegestudent == 'Only College Students' && current_user.collegeemail.blank?
+        next if x.visible == false
+
+        @results.push(x)
       end
-    @unread = 0
-    @requests = 
-    @unread = current_user.chatroom_users.where(read: false).count
+      @unread = 0
+      @requests =
+        @unread = current_user.chatroom_users.where(read: false).count
       current_user.chatroom_users.where(admin: true).each do |x|
         @which = Chatroom.find(x.chatroom_id)
-        @requests = @requests + @which.requests.count
+        @requests += @which.requests.count
       end
     end
   end

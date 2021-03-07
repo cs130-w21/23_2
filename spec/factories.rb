@@ -39,3 +39,4 @@ FactoryBot.define do
     chatroom
     user
   end
+end
